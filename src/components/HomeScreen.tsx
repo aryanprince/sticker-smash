@@ -2,13 +2,15 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import ImageViewer from '@/components/ImageViewer'
+import Button from './Button'
+import ImageViewer from './ImageViewer'
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.headerText}>StickerSmash!</Text>
       <ImageViewer />
+      <Button label="Click me!" />
       <Text style={styles.footerText}>Built by Aryan</Text>
       <StatusBar style="auto" />
     </SafeAreaView>
