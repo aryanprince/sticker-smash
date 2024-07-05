@@ -1,6 +1,6 @@
 import * as ImagePicker from 'expo-image-picker'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
@@ -9,6 +9,7 @@ import Button from './Button'
 import CircleButton from './CircleButton'
 import EmojiList from './EmojiList'
 import EmojiPicker from './EmojiPicker'
+import EmojiSticker from './EmojiSticker'
 import IconButton from './IconButton'
 import ImageViewer from './ImageViewer'
 
@@ -16,12 +17,13 @@ export default function HomeScreen() {
   const [selectedImage, setSelectedImage] = useState<string>('')
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false)
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
-  const [pickedEmoji, setPickedEmoji] = useState('')
+  const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType>()
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
+      selectionLimit: 1,
     })
 
     result.canceled && alert('You did not select any image.')
@@ -49,10 +51,15 @@ export default function HomeScreen() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: 50,
+          gap: 16,
         }}
       >
-        <ImageViewer selectedImage={selectedImage} />
+        <View>
+          <ImageViewer selectedImage={selectedImage} />
+          {pickedEmoji && (
+            <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
+          )}
+        </View>
 
         {/* MENU 1 - SELECT PHOTO */}
         {!showAppOptions && (
@@ -125,7 +132,7 @@ export default function HomeScreen() {
           onCloseModal={() => setIsModalVisible(false)}
         />
       </EmojiPicker>
-      <Text style={styles.footerText}>Built by Aryan</Text>
+      <Text style={styles.footerText}>Built by Aryan, from Expo docs.</Text>
       <StatusBar style="auto" />
     </SafeAreaView>
   )
