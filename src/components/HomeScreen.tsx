@@ -7,12 +7,14 @@ import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
 import { useState } from 'react'
 import Button from './Button'
 import CircleButton from './CircleButton'
+import EmojiPicker from './EmojiPicker'
 import IconButton from './IconButton'
 import ImageViewer from './ImageViewer'
 
 export default function HomeScreen() {
   const [selectedImage, setSelectedImage] = useState<string>('')
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false)
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -26,14 +28,6 @@ export default function HomeScreen() {
       setSelectedImage(result.assets[0].uri)
       setShowAppOptions(true)
     }
-  }
-
-  const onReset = () => {
-    setShowAppOptions(false)
-  }
-
-  const onAddSticker = () => {
-    // TODO: Yet to implement
   }
 
   const onSaveImage = () => {
@@ -85,18 +79,27 @@ export default function HomeScreen() {
                 justifyContent: 'space-between',
               }}
             >
+              {/* BACK BUTTON */}
               <IconButton
                 label="Reset"
                 icon={<Feather name="rotate-cw" size={24} color="#fff" />}
-                onPress={onReset}
+                onPress={() => {
+                  setShowAppOptions(false)
+                }}
               />
-              <CircleButton onPress={onAddSticker} />
+
+              {/* ADD NEW STICKER, OPENS MODAL */}
+              <CircleButton onPress={() => setIsModalVisible(true)} />
+
+              {/* SAVE BUTTON */}
               <IconButton
                 label="Save"
                 icon={<Feather name="download" size={24} color="#fff" />}
                 onPress={onSaveImage}
               />
             </View>
+
+            {/* BACK BUTTON */}
             <Button
               variant="custom-icon"
               label="Select new pic"
@@ -109,6 +112,14 @@ export default function HomeScreen() {
       {/* END OF CONTENT */}
 
       {/* FOOTER */}
+      <EmojiPicker
+        isVisible={isModalVisible}
+        onClose={() => {
+          setIsModalVisible(false)
+        }}
+      >
+        <Feather name="download" size={24} color="#fff" />
+      </EmojiPicker>
       <Text style={styles.footerText}>Built by Aryan</Text>
       <StatusBar style="auto" />
     </SafeAreaView>
