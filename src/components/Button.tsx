@@ -3,11 +3,13 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 export default function Button({
   label,
+  icon,
   variant = 'primary',
   onPress,
 }: {
-  label: string
-  variant?: 'primary' | 'secondary'
+  label?: string
+  icon?: React.ReactNode
+  variant?: 'primary' | 'secondary' | 'custom-icon'
   onPress?: () => void
 }) {
   if (variant === 'primary') {
@@ -22,11 +24,17 @@ export default function Button({
   } else if (variant === 'secondary') {
     return (
       <View>
-        <Pressable
-          style={styles.secondaryButtonContainer}
-          onPress={() => alert('You pressed a button.')}
-        >
+        <Pressable style={styles.secondaryButtonContainer} onPress={onPress}>
           <FontAwesome name="arrow-right" size={18} color="#fff" />
+          <Text style={styles.secondaryButtonLabel}>{label}</Text>
+        </Pressable>
+      </View>
+    )
+  } else if (variant === 'custom-icon') {
+    return (
+      <View>
+        <Pressable style={styles.secondaryButtonContainer} onPress={onPress}>
+          {icon}
           <Text style={styles.secondaryButtonLabel}>{label}</Text>
         </Pressable>
       </View>
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#262626',
     borderColor: '#fff',
     paddingVertical: 24,
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',

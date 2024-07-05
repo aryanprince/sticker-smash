@@ -3,12 +3,16 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
 import { useState } from 'react'
 import Button from './Button'
+import CircleButton from './CircleButton'
+import IconButton from './IconButton'
 import ImageViewer from './ImageViewer'
 
 export default function HomeScreen() {
   const [selectedImage, setSelectedImage] = useState<string>('')
+  const [showAppOptions, setShowAppOptions] = useState<boolean>(false)
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -18,12 +22,18 @@ export default function HomeScreen() {
 
     result.canceled && alert('You did not select any image.')
 
-    result.assets && setSelectedImage(result.assets[0].uri)
+    if (result.assets) {
+      setSelectedImage(result.assets[0].uri)
+      setShowAppOptions(true)
+    }
   }
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* HEADER */}
       <Text style={styles.headerText}>StickerSmash!</Text>
+
+      {/* CONTENT */}
       <View
         style={{
           flex: 1,
@@ -35,15 +45,55 @@ export default function HomeScreen() {
         }}
       >
         <ImageViewer selectedImage={selectedImage} />
-        <View style={{ flexDirection: 'column', gap: 12 }}>
-          <Button
-            label="Choose a photo"
-            variant="primary"
-            onPress={pickImageAsync}
-          />
-          <Button label="Use this photo" variant="secondary" />
-        </View>
+
+        {/* MENU 1 - SELECT PHOTO */}
+        {!!showAppOptions && (
+          <View style={{ flexDirection: 'column', gap: 12 }}>
+            <Button
+              label="Choose a photo"
+              variant="primary"
+              onPress={pickImageAsync}
+            />
+            <Button
+              label="Use this photo"
+              variant="secondary"
+              onPress={() => setShowAppOptions(true)}
+            />
+          </View>
+        )}
+
+        {/* MENU 2 - ADD EMOJIS */}
+        {!showAppOptions && (
+          <View style={{ flexDirection: 'column', gap: 32 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 16,
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <IconButton
+                label="Reset"
+                icon={<Feather name="rotate-cw" size={24} color="#fff" />}
+              />
+              <CircleButton />
+              <IconButton
+                label="Save"
+                icon={<Feather name="download" size={24} color="#fff" />}
+              />
+            </View>
+            <Button
+              variant="custom-icon"
+              label="Select new pic"
+              icon={<AntDesign name="back" size={24} color="#fff" />}
+            />
+          </View>
+        )}
       </View>
+      {/* END OF CONTENT */}
+
+      {/* FOOTER */}
       <Text style={styles.footerText}>Built by Aryan</Text>
       <StatusBar style="auto" />
     </SafeAreaView>
