@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ImageViewer from './ImageViewer'
+
+import ImageViewer from '@/components/ImageViewer'
 
 export default function HomeScreen() {
   return (
