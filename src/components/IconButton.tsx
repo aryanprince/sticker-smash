@@ -1,21 +1,21 @@
-import { Feather } from '@expo/vector-icons'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, Text } from 'react-native'
 
 export default function IconButton({
   label,
   icon,
+  onPress,
 }: {
   label: string
   icon: React.ReactNode
+  onPress?: () => void
 }) {
   return (
-    <View style={{}}>
-      <Pressable
-        style={{ flexDirection: 'column', gap: 12, alignItems: 'center' }}
-      >
-        {icon}
-        <Text style={{ color: '#fff' }}>{label}</Text>
-      </Pressable>
-    </View>
+    <Pressable
+      style={{ flexDirection: 'column', gap: 12, alignItems: 'center' }}
+      onPress={onPress}
+    >
+      {icon}
+      <Text style={{ color: '#fff' }}>{label}</Text>
+    </Pressable>
   )
 }

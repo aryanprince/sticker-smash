@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import { Pressable, View } from 'react-native'
 
-export default function CircleButton() {
+export default function CircleButton({ onPress }: { onPress?: () => void }) {
   return (
     <View
       style={{
@@ -13,6 +13,7 @@ export default function CircleButton() {
     >
       <Pressable
         style={{ backgroundColor: '#fff', borderRadius: 9999, padding: 12 }}
+        onPress={onPress}
       >
         <Feather name="plus" size={36} />
       </Pressable>
