@@ -15,7 +15,7 @@ export default function EmojiPicker({
       {/* MODAL: FULL CONTENT */}
       <View
         style={{
-          height: '30%',
+          height: '25%',
           width: '100%',
           backgroundColor: '#0a0a0a',
           borderTopRightRadius: 18,
@@ -27,7 +27,7 @@ export default function EmojiPicker({
         {/* MODAL: TITLE HEADER + CLOSE BUTTON */}
         <View
           style={{
-            height: '16%',
+            height: '25%',
             backgroundColor: '#171717',
             borderTopRightRadius: 10,
             borderTopLeftRadius: 10,

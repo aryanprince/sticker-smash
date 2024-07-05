@@ -7,6 +7,7 @@ import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
 import { useState } from 'react'
 import Button from './Button'
 import CircleButton from './CircleButton'
+import EmojiList from './EmojiList'
 import EmojiPicker from './EmojiPicker'
 import IconButton from './IconButton'
 import ImageViewer from './ImageViewer'
@@ -15,6 +16,7 @@ export default function HomeScreen() {
   const [selectedImage, setSelectedImage] = useState<string>('')
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false)
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+  const [pickedEmoji, setPickedEmoji] = useState('')
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -118,7 +120,10 @@ export default function HomeScreen() {
           setIsModalVisible(false)
         }}
       >
-        <Feather name="download" size={24} color="#fff" />
+        <EmojiList
+          onSelect={setPickedEmoji}
+          onCloseModal={() => setIsModalVisible(false)}
+        />
       </EmojiPicker>
       <Text style={styles.footerText}>Built by Aryan</Text>
       <StatusBar style="auto" />
