@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button from './Button'
@@ -9,8 +9,13 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.headerText}>StickerSmash!</Text>
-      <ImageViewer />
-      <Button label="Click me!" />
+      <View style={{ flex: 1, flexDirection: 'column', gap: 52 }}>
+        <ImageViewer />
+        <View style={{ flex: 1, flexDirection: 'column', gap: 12 }}>
+          <Button label="Choose a photo" variant="primary" />
+          <Button label="Use this photo" variant="secondary" />
+        </View>
+      </View>
       <Text style={styles.footerText}>Built by Aryan</Text>
       <StatusBar style="auto" />
     </SafeAreaView>
