@@ -28,6 +28,18 @@ export default function HomeScreen() {
     }
   }
 
+  const onReset = () => {
+    setShowAppOptions(false)
+  }
+
+  const onAddSticker = () => {
+    // TODO: Yet to implement
+  }
+
+  const onSaveImage = () => {
+    // TODO: Yet to implement
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* HEADER */}
@@ -47,7 +59,7 @@ export default function HomeScreen() {
         <ImageViewer selectedImage={selectedImage} />
 
         {/* MENU 1 - SELECT PHOTO */}
-        {!!showAppOptions && (
+        {!showAppOptions && (
           <View style={{ flexDirection: 'column', gap: 12 }}>
             <Button
               label="Choose a photo"
@@ -62,8 +74,8 @@ export default function HomeScreen() {
           </View>
         )}
 
-        {/* MENU 2 - ADD EMOJIS */}
-        {!showAppOptions && (
+        {/* MENU 2 - EDIT PHOTO & ADD EMOJIS */}
+        {!!showAppOptions && (
           <View style={{ flexDirection: 'column', gap: 32 }}>
             <View
               style={{
@@ -76,17 +88,20 @@ export default function HomeScreen() {
               <IconButton
                 label="Reset"
                 icon={<Feather name="rotate-cw" size={24} color="#fff" />}
+                onPress={onReset}
               />
-              <CircleButton />
+              <CircleButton onPress={onAddSticker} />
               <IconButton
                 label="Save"
                 icon={<Feather name="download" size={24} color="#fff" />}
+                onPress={onSaveImage}
               />
             </View>
             <Button
               variant="custom-icon"
               label="Select new pic"
               icon={<AntDesign name="back" size={24} color="#fff" />}
+              onPress={() => setShowAppOptions(false)}
             />
           </View>
         )}
